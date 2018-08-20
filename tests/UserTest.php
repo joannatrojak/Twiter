@@ -39,4 +39,8 @@ class UserTest extends TestCase{
         $this->expectExceptionMessage('Email incorrect');
         $user->setEmail($email);
     }
+    public function testInsertIntoDatabase(){
+        $user = new User(); 
+        $this->assertTrue($user->createUser()); 
+    }
 }

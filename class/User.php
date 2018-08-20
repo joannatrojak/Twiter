@@ -13,7 +13,7 @@
  */
 
 
-include_once 'Database.php';
+include 'C:\xampp\htdocs\Twitter\config\database.php';
 class User {
     private $id; 
     private $username; 
@@ -27,7 +27,7 @@ class User {
         $this->username = ''; 
         $this->password = ''; 
         $this->email = '';
-        $this->databaseConnection = Database::getInstance(); 
+        $this->databaseConnection = new mysqli(DB_HOST, DB_LOGIN, DB_PASSWORD, DB_DB); 
     }
     public function setUsername($username){
         $this->username = $username; 
@@ -57,7 +57,25 @@ class User {
     public function getEmail(){
         return $this->email;
     }
+    public function createUser(){
+        if ($this->id == -1){
+            $sql = "INSERT INTO user (username, password, email) VALUES(?, ?, ?)";
+            $stmt = $this->databaseConnection->prepare($sql); 
+            $stmt->bind_param("sss", $this->username, $this->password, $this->email);
+            if ($stmt->execute() == True){
+                return TRUE; 
+            }
+            return FALSE; 
+        }
+    }
+    static public function loadUserById($id){
+        $sql = "SELECT * FROM user WHERE id=?"; 
+        $stmt = $this->databaseConnection->prepare($sql); 
+        $stmt->bind_param("s", $this->id); 
+        if ($stmt->execute() == True){
+            return True; 
+        }
+        return False; 
+    }
 }
-
-
 
