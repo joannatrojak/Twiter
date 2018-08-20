@@ -1,5 +1,6 @@
 <?php
 use PHPUnit\Framework\TestCase;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -14,6 +15,6 @@ use PHPUnit\Framework\TestCase;
 class DatabaseTest extends TestCase{
     //put your code here
     public function testThis(){
-        assertSame(2, 1+1);
+        $this->assertSame(2, 1+1);
     }
 }

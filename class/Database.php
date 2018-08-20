@@ -11,6 +11,9 @@
  *
  * @author joasi
  */
+
+ 
+
 class Database {
     //put your code here
     private static $instance = null;
@@ -40,6 +43,4 @@ class Database {
     }
     
 }
-$database = Database::getInstance(); 
-$conn = $database->getConnection(); 
-var_dump($conn);
+
