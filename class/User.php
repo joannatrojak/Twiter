@@ -83,7 +83,52 @@ class User {
         }
         return null;
     }
+    static public function loadAllUsers()
+    {
+        $sql = "SELECT * FROM user";
+        $ret = [];
+        $result = self::$databaseConnection->query($sql);
+        if ($result == true && $result->num_rows != 0)
+        {
+            foreach($result as $row)
+            {
+                $loadedUser = new User();
+                $loadedUser->id  = $row['id'];
+                $loadedUser->email = $row['email'];
+                $loadedUser->username = $row['username'];
+                $loadedUser->password = $row['password'];
+                $ret[] = $loadedUser;
+            }
+        }
+        return $ret;
+    }
+    public function delete()
+    {
+        if ($this->id != -1)
+        {
+            $sql = "DELETE FROM Users WHERE id = $this->id";
+            $result = self::$databaseConnection->query($sql);
+            if ($result == true)
+            {
+                $this->id = -1;
+                return true;
+            }
+            return false;
+        }
+        return true;
+    }
+    public function updateUser(){
+            $sql = "UPDATE Users SET email = '$this->email', username = '$this->username'
+                      hashed_Password = '$this->password'
+                      WHERE id = $this->id";
+            $result = self::$databaseConnection->query($sql);
+            if ($result == true)
+            {
+                return true;
+            }
+            return false;
+    }
 }
 $user = new User(); 
-var_dump($user::loadUserById(1));
+var_dump($user::loadAllUsers());
 
