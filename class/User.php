@@ -19,7 +19,7 @@ class User {
     private $username; 
     private $password; 
     private $email; 
-    private $databaseConnection;
+    private static $databaseConnection;
 
 
     public function __construct() {
@@ -27,7 +27,7 @@ class User {
         $this->username = ''; 
         $this->password = ''; 
         $this->email = '';
-        $this->databaseConnection = new mysqli(DB_HOST, DB_LOGIN, DB_PASSWORD, DB_DB); 
+        self::$databaseConnection = new mysqli(DB_HOST, DB_LOGIN, DB_PASSWORD, DB_DB); 
     }
     public function setUsername($username){
         $this->username = $username; 
@@ -69,13 +69,21 @@ class User {
         }
     }
     static public function loadUserById($id){
-        $sql = "SELECT * FROM user WHERE id=?"; 
-        $stmt = $this->databaseConnection->prepare($sql); 
-        $stmt->bind_param("s", $this->id); 
-        if ($stmt->execute() == True){
-            return True; 
+        $sql = "SELECT * FROM user WHERE id=$id"; 
+        $result = self::$databaseConnection->query($sql); 
+        
+        if ($result == true && $result->num_rows >0){
+            $row = $result->fetch_assoc();
+            $loadUser = new User();
+            $loadUser->id = $row['id'];
+            $loadUser->email = $row['email'];
+            $loadUser->username = $row['username'];
+            $loadUser->password = $row['password'];
+            return $loadUser;
         }
-        return False; 
+        return null;
     }
 }
+$user = new User(); 
+var_dump($user::loadUserById(1));
 
