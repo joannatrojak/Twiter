@@ -11,7 +11,7 @@
  *
  * @author joasi
  */
-include 'C:\xampp\htdocs\Twitter\config\database.php';
+
 class Tweet implements JsonSerializable
 {
     //put your code here
@@ -131,7 +131,6 @@ class Tweet implements JsonSerializable
     public function jsonSerialize()
     {
         return [
-            'id'          => $this->id,
             'userId'       => $this->userId,
             'text' => $this->text,
             'creationDate'   => $this->creationDate,
