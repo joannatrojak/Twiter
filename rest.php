@@ -5,11 +5,13 @@ require_once __DIR__.'/config/database.php';
 
 $response = [];
 //connect to DB
+
 try{
-    new mysqli(DB_HOST, DB_LOGIN, DB_PASSWORD, DB_DB); 
+    $conn = new mysqli(DB_HOST, DB_LOGIN, DB_PASSWORD, DB_DB); 
 } catch (mysqli_sql_exception $e ) {
     $response = ['error' => 'DB Connection error: '.$e->getMessage()];
 }
+ 
 
 ######### Dynamic load php class file depend on request #########
 //parsing url
@@ -31,6 +33,7 @@ require_once $classFile;
 ######### END DYNAMIC LOAD #########
 
 $pathId = isset($path[2]) ? $path[2] : null;
+
 
 if (!isset($response['error'])) {//process request if no db error
     include_once __DIR__.'/restEndpoints/'.$className.'.php';

@@ -19,7 +19,7 @@ class Tweet implements JsonSerializable
     private $userId;
     private $text;
     private $creationDate;
-    private static $databaseConnection;
+    public static $databaseConnection;
     
     
     public function __construct()
@@ -28,7 +28,6 @@ class Tweet implements JsonSerializable
         $this->userId = "";
         $this->text = "";
         $this->creationDate = "";
-        self::$databaseConnection = new mysqli(DB_HOST, DB_LOGIN, DB_PASSWORD, DB_DB); 
     }
     public function getId()
     {
@@ -72,7 +71,7 @@ class Tweet implements JsonSerializable
             return false;
         }
     }
-    static public function loadTweetById($id)
+    static public function loadTweetById($databaseConnection, $id)
     {
         $sql = "SELECT * FROM tweet WHERE id = $id";
         $result = self::$databaseConnection->query($sql);
@@ -88,7 +87,7 @@ class Tweet implements JsonSerializable
         }
         return null;
     }
-    static public function loadTweetsByUserId($userId)
+    static public function loadTweetsByUserId($databaseConnection, $userId)
     {
         $sql = "SELECT * FROM tweet WHERE userId = $userId";
         $result = self::$databaseConnection->query($sql);
@@ -108,11 +107,11 @@ class Tweet implements JsonSerializable
         }
         return null;
     }
-    static public function loadAllTweets()
+    static public function loadAllTweets($databaseConnection)
     {
         $sql = "SELECT * FROM tweet";
         $ret = [];
-        $result = self::$databaseConnection->query($sql);
+        $result = $databaseConnection->query($sql);
         if ($result == true && $result->num_rows > 0)
         {
             foreach ($result as $row)
@@ -137,11 +136,8 @@ class Tweet implements JsonSerializable
         ];
     }
 }
-$tweet = new Tweet(); 
-$tweet->setUserId(1); 
-$tweet->setText('text text'); 
-$tweet->setCreationDate(date('y-m-d'));
-var_dump($tweet->jsonSerialize());
+//$tweet = new Tweet(); 
+//var_dump($tweet->loadAllTweets());
 
 
 
