@@ -22,12 +22,13 @@ class Tweet implements JsonSerializable
     public static $databaseConnection;
     
     
-    public function __construct()
+    public function __construct($db)
     {
         $this->id = -1;
         $this->userId = "";
         $this->text = "";
         $this->creationDate = "";
+        self::$databaseConnection = $db; 
     }
     public function getId()
     {
@@ -116,7 +117,7 @@ class Tweet implements JsonSerializable
         {
             foreach ($result as $row)
             {
-                $loadedTweet = new Tweet();
+                $loadedTweet = new Tweet($db);
                 $loadedTweet->id = $row['id'];
                 $loadedTweet->userId = $row['userId'];
                 $loadedTweet->text = $row['text'];
