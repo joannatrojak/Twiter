@@ -1,13 +1,14 @@
 <?php
 //$conn = new mysqli(DB_HOST, DB_LOGIN, DB_PASSWORD, DB_DB);
 if ($_SERVER['REQUEST_METHOD'] == 'GET') {
-    $tweets = Tweet::loadAllTweets($conn); 
+    $tweets = Tweet::loadAllTweets($conn, isset($pathId) ? $pathId : null); 
     $jsonTweets = [];
     foreach ($tweets as $tweet) {
         $jsonTweets[] = json_decode(json_encode($tweet), true);
     }
     $response = ['success' => $jsonTweets];
-} elseif ($_SERVER['REQUEST_METHOD'] == 'POST') {
+}
+elseif ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $tweet = new Tweet($conn); 
     $tweet->setUserId($_POST['user_Id']); 
     $tweet->setText($_POST['text']); 

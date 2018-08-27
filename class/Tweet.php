@@ -97,7 +97,7 @@ class Tweet implements JsonSerializable
         {
             foreach ($result as $row)
             {
-                $loadedTweet = new Tweet();
+                $loadedTweet = new Tweet($databaseConnection);
                 $loadedTweet->id = $row['id'];
                 $loadedTweet->userId = $row['userId'];
                 $loadedTweet->text = $row['text'];
@@ -108,16 +108,21 @@ class Tweet implements JsonSerializable
         }
         return null;
     }
-    static public function loadAllTweets($databaseConnection)
+    static public function loadAllTweets($databaseConnection, $userId = null)
     {
-        $sql = "SELECT * FROM tweet";
+        if (!$userId){
+            $sql = "SELECT * FROM tweet";
+        }
+        else{
+            $sql = $sql = "SELECT * FROM tweet WHERE userId = $userId";
+        }
         $ret = [];
         $result = $databaseConnection->query($sql);
         if ($result == true && $result->num_rows > 0)
         {
             foreach ($result as $row)
             {
-                $loadedTweet = new Tweet($db);
+                $loadedTweet = new Tweet($databaseConnection);
                 $loadedTweet->id = $row['id'];
                 $loadedTweet->userId = $row['userId'];
                 $loadedTweet->text = $row['text'];
