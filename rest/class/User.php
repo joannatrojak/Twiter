@@ -11,15 +11,12 @@
  *
  * @author joasi
  */
-
-
-include 'C:\xampp\htdocs\Twitter\config\database.php';
 class User {
     private $id; 
     private $username; 
     private $password; 
     private $email; 
-    private static $databaseConnection;
+    public static $databaseConnection;
 
 
     public function __construct() {
@@ -60,7 +57,7 @@ class User {
     public function createUser(){
         if ($this->id == -1){
             $sql = "INSERT INTO user (username, password, email) VALUES(?, ?, ?)";
-            $stmt = $this->databaseConnection->prepare($sql); 
+            $stmt = self::$databaseConnection->prepare($sql); 
             $stmt->bind_param("sss", $this->username, $this->password, $this->email);
             if ($stmt->execute() == True){
                 return TRUE; 
@@ -102,11 +99,27 @@ class User {
         }
         return $ret;
     }
+    static public function loadUserByEmail($email)
+    {
+        $sql = "SELECT * FROM user WHERE email ='$email'";
+        $result = self::$databaseConnection->query($sql);
+        if ($result == true && $result->num_rows == 1)
+        {
+            $row = $result->fetch_assoc();
+            $loadedUser = new User();
+            $loadedUser->id = $row['id'];
+            $loadedUser->email = $row['email'];
+            $loadedUser->username = $row['email'];
+            $loadedUser->password = $row['password'];
+            return $loadedUser;
+        }
+        return null;
+    }
     public function delete()
     {
         if ($this->id != -1)
         {
-            $sql = "DELETE FROM Users WHERE id = $this->id";
+            $sql = "DELETE FROM user WHERE id = $this->id";
             $result = self::$databaseConnection->query($sql);
             if ($result == true)
             {
@@ -118,7 +131,7 @@ class User {
         return true;
     }
     public function updateUser(){
-            $sql = "UPDATE Users SET email = '$this->email', username = '$this->username'
+            $sql = "UPDATE user SET email = '$this->email', username = '$this->username'
                       hashed_Password = '$this->password'
                       WHERE id = $this->id";
             $result = self::$databaseConnection->query($sql);
@@ -129,6 +142,4 @@ class User {
             return false;
     }
 }
-$user = new User(); 
-var_dump($user::loadAllUsers());
 
