@@ -12,8 +12,8 @@ elseif ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $tweet = new Tweet($conn); 
     $tweet->setUserId($_POST['user_Id']); 
     $tweet->setText($_POST['text']); 
-    $tweet->setCreationDate($_POST['creation_Date']); 
-    
+    $date = new DateTime("now"); 
+    $tweet->setCreationDate($date->format('Y m d'));
     $tweet->saveToDb(); 
     $response = ['success' => [json_decode(json_encode($tweet), true)]];
 } elseif ($_SERVER['REQUEST_METHOD'] == 'PATCH') {

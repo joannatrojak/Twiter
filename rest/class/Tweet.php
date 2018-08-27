@@ -27,7 +27,7 @@ class Tweet implements JsonSerializable
         $this->id = -1;
         $this->userId = "";
         $this->text = "";
-        $this->creationDate = "";
+        $this->creationDate= "";
         self::$databaseConnection = $db; 
     }
     public function getId()
@@ -56,14 +56,16 @@ class Tweet implements JsonSerializable
     }
     public function getCreationDate()
     {
-        return $this->creationDate;
+        return $this->creationDate->format('Y m d');
     }
     public function saveToDb()
     {
         if ($this->id == -1)
         {
-            $sql = "INSERT INTO tweet(userId, text, creationDate) VALUES ('$this->userId', '$this->text', $this->creationDate)";
+            $sql = "INSERT INTO tweet(userId, text) VALUES ('$this->userId', '$this->text')";
+            var_dump($this->creationDate);
             $result = self::$databaseConnection->query($sql);
+            var_dump($result);
             if ($result == true)
             {
                 $this->id = self::$databaseConnection->insert_id;
