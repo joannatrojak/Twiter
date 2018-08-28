@@ -26,6 +26,9 @@ class User {
         $this->email = '';
         self::$databaseConnection = new mysqli(DB_HOST, DB_LOGIN, DB_PASSWORD, DB_DB); 
     }
+    public function getId(){
+        return $this->id;
+    }
     public function setUsername($username){
         $this->username = $username; 
     }

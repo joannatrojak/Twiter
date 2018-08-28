@@ -20,21 +20,17 @@ require_once '../rest/class/User.php';
         </div>
         <ul class="nav navbar-nav">
             <li><a href="index.php">Home</a></li>
-            <li class="active"><a href="#">Register</a></li>
-            <li><a href="login.php">Login</a></li>
+            <li><a href="register.php">Register</a></li>
+            <li class="active"><a href="#">Login</a></li>
         </ul>
     </div>
 </nav>
 <div class="container">
     <form action="" method="post">
-        <h3>Register</h3>
+        <h3>Login</h3>
         <div class="form-group">
             <label for="email">Email address:</label>
             <input type="email" class="form-control" id="email" name="email">
-        </div>
-        <div class="form-group">
-            <label for="username">Username:</label>
-            <input type="text" class="form-control" id="username" name="username">
         </div>
         <div class="form-group">
             <label for="pwd">Password:</label>
@@ -43,25 +39,23 @@ require_once '../rest/class/User.php';
         <button type="submit" class="btn btn-default">Submit</button>
     </form>
     <?php
-    if (!empty($_POST['email']) && !empty($_POST['username']) && !empty($_POST['pwd']))
+    if (!empty($_POST['email']) && !empty($_POST['pwd']))
     {
-    $email = $_POST['email'];
-    $username = $_POST['username'];
-    $pwd = $_POST['pwd'];
-    $User = new User();
-    $User->setEmail($email);
-    $User->setUsername($username);
-    $User->setPassword($pwd);
-    
-    if (!is_null($User::loadUserByEmail($email))){
-        throw new Exception("Użytkownik istnieje już w bazie");
-    }
-    $User->createUser();
-    echo "Konto zostało utworzone. Zaloguj się.";
-    session_unset();
+        $email = $_POST['email'];
+        $pwd = $_POST['pwd'];
+        $user = new User();
+        $User = $user::loadUserByEmail($email);
+        
+        if (!is_null($User) && password_verify($pwd, $User->getPassword())){
+            $userId = $User->getId(); 
+            $_SESSION['userId'] = $userId;
+            $_SESSION['username'] = $User->getUsername();
+            header("Location: dashboard.php");
+        }
+        echo "Błędny email bądź hasło";
+        
     }
     ?>
 </div>
 </body>
 </html>
-
