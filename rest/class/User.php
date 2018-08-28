@@ -112,7 +112,7 @@ class User {
             $loadedUser = new User();
             $loadedUser->id = $row['id'];
             $loadedUser->email = $row['email'];
-            $loadedUser->username = $row['email'];
+            $loadedUser->username = $row['username'];
             $loadedUser->password = $row['password'];
             return $loadedUser;
         }

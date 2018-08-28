@@ -1,6 +1,6 @@
 <?php
 //load DB config
-require_once __DIR__.'/config/database.php';
+require_once '../rest/config/database.php'; 
 
 
 $response = [];
@@ -28,6 +28,7 @@ $requestClass = preg_replace('#[^0-9a-zA-Z]#', '', $requestClass);//remove all n
 $className = ucfirst(strtolower($requestClass));
 
 $classFile = __DIR__.'/class/'.$className.'.php';
+
 require_once $classFile;
 
 ######### END DYNAMIC LOAD #########

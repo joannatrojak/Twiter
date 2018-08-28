@@ -144,8 +144,7 @@ class Tweet implements JsonSerializable
         ];
     }
 }
-//$tweet = new Tweet(); 
-//var_dump($tweet->loadAllTweets());
+
 
 
 
