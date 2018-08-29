@@ -11,7 +11,7 @@
  *
  * @author joasi
  */
-
+require_once 'User.php';
 class Tweet implements JsonSerializable
 {
     //put your code here
@@ -19,6 +19,7 @@ class Tweet implements JsonSerializable
     private $userId;
     private $text;
     private $creationDate;
+    private $user;
     public static $databaseConnection;
     
     
@@ -122,11 +123,12 @@ class Tweet implements JsonSerializable
         $result = $databaseConnection->query($sql);
         if ($result == true && $result->num_rows > 0)
         {
+            $user = new User();
             foreach ($result as $row)
             {
                 $loadedTweet = new Tweet($databaseConnection);
                 $loadedTweet->id = $row['id'];
-                $loadedTweet->userId = $row['userId'];
+                $loadedTweet->userId = User::loadUserById($row['userId'])->getUsername();
                 $loadedTweet->text = $row['text'];
                 $loadedTweet->creationDate = $row['creationDate'];
                 $ret[] = $loadedTweet;
