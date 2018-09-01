@@ -38,19 +38,36 @@ require_once '../rest/class/User.php';
             <form action="" method="post">
                 <div class="form-group">
                 <label for="email">Username</label>
-                <input type="text" class="form-control" id="username">
+                <input type="text" class="form-control" id="username" name="username">
                  </div>
                 <div class="form-group">
                 <label for="email">Email address:</label>
-                <input type="email" class="form-control" id="email">
+                <input type="email" class="form-control" id="email" name="email">
                 </div>
                 <div class="form-group">
                 <label for="email">Password</label>
-                <input type="password" class="form-control" id="password">
+                <input type="password" class="form-control" id="password" name="password">
                 </div>
             <button type="submit" class="btn btn-primary">Submit</button>
             </form> 
-        </div>   
+        </div> 
+        <?php 
+        $User = new User();
+        $loadedUser = $User->loadUserById($_SESSION['userId']);
+        
+        if (isset($_POST['username'])){
+            $loadedUser->setUsername($_POST['username']); 
+            $loadedUser->updateUser();
+        }
+        if (isset($_POST['email'])){
+            $loadedUser->setUsername($_POST['email']); 
+            $loadedUser->updateUser();
+        }
+        if (isset($_POST['password'])){
+            $loadedUser->setUsername($_POST['password']); 
+            $loadedUser->updateUser();
+        }
+        ?>
     </body>
 </html>
 

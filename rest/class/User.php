@@ -134,8 +134,8 @@ class User {
         return true;
     }
     public function updateUser(){
-            $sql = "UPDATE user SET email = '$this->email', username = '$this->username'
-                      hashed_Password = '$this->password'
+            $sql = "UPDATE user SET email = '$this->email', username = '$this->username',
+                      password= '$this->password'
                       WHERE id = $this->id";
             $result = self::$databaseConnection->query($sql);
             if ($result == true)
