@@ -21,6 +21,7 @@ require_once '../rest/class/User.php';
         <ul class="nav navbar-nav">
             <li class="active"><a href="#">Main</a></li>
             <li><a href="settings.php">Settings</a></li>
+            <li><a href="profile.php"><?php echo $_SESSION['username'];?></a></li>
             <li><a href="logout.php">Log Out</a></li>
         </ul>
     </div>
