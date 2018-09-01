@@ -6,6 +6,15 @@ function getTweets(){
         });
     });
 }
+function getTweetsByUserId(){
+    var id = document.querySelector('#tweetList').getAttribute('data-id');
+    $.get("http://localhost/Twitter/rest/rest.php/tweet/" + id, function(data){
+        var tweetList = data.success; 
+        tweetList.forEach(function(singleTweet){
+            addTweetToTable(singleTweet);
+        });
+    });
+}
 function addTweetToTable(singleTweet){
     var newTweet = '<th>'+singleTweet.userId+'</th>'+
             '<tr><td>'+singleTweet.text+'</td></tr>'+
@@ -15,6 +24,7 @@ function addTweetToTable(singleTweet){
     table.innerHTML += newTweet;
 }
 getTweets();
+getTweetsByUserId();
 
 
 
