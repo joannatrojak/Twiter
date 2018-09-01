@@ -2,15 +2,6 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-        <group>
-            <file>file:/C:/xampp/htdocs/Twitter/front/dashboard.php</file>
-            <file>file:/C:/xampp/htdocs/Twitter/rest/class/Tweet.php</file>
-            <file>file:/C:/xampp/htdocs/Twitter/rest/restEndpoints/Tweet.php</file>
-            <file>file:/C:/xampp/htdocs/Twitter/front/login.php</file>
-            <file>file:/C:/xampp/htdocs/Twitter/front/Tweet.js</file>
-            <file>file:/C:/xampp/htdocs/Twitter/front/register.php</file>
-            <file>file:/C:/xampp/htdocs/Twitter/rest/class/User.php</file>
-            <file>file:/C:/xampp/htdocs/Twitter/rest/rest.php</file>
-        </group>
+        <group/>
     </open-files>
 </project-private>
